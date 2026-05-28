@@ -39,15 +39,19 @@ codex
 Recommended prompt for a new feature:
 
 ```text
+$vibecoding-codex-workflow
+$vibecoding-architecture-design
 $vibecoding-fullstack-module
 Add a "note" module with title + content, full CRUD.
-Run verify.sh before finishing.
+First design from the current code structure, then implement and run verify.sh.
 ```
 
 ### Skills
 
 | Skill | Purpose |
 |-------|---------|
+| `$vibecoding-codex-workflow` | Default Codex entrypoint and skill router |
+| `$vibecoding-architecture-design` | Required design gate before coding |
 | Superpowers (`brainstorming`, `writing-plans`, …) | Design, TDD, debugging, planning |
 | `$vibecoding-backend-module` | Backend module + migrations + zod API |
 | `$vibecoding-frontend-module` | Frontend module + api client + routes |

@@ -19,11 +19,15 @@ That clones `vendor/superpowers/` and links Codex skills to
 or `/add-plugin superpowers` from the Cursor marketplace panel.
 
 **Skill priority:** instructions in this file override Superpowers defaults.
-Superpowers handles general workflow (brainstorming, TDD, debugging, planning).
-Repo-specific architecture rules live in `$vibecoding-*` skills below.
+Start with `$vibecoding-codex-workflow` for project work, then load the
+matching Superpowers and module skills it routes to. Superpowers handles
+general workflow (brainstorming, TDD, debugging, planning). Repo-specific
+architecture rules live in `$vibecoding-*` skills below.
 
 | User intent | Skill to invoke |
 |-------------|-----------------|
+| Any project development / analysis / verification task | `$vibecoding-codex-workflow` first |
+| Architecture design before coding | `$vibecoding-architecture-design` |
 | Plan / design before coding | Superpowers `brainstorming`, `writing-plans` |
 | Implement with TDD | Superpowers `test-driven-development` |
 | Debug unexpected failures | Superpowers `systematic-debugging` |
@@ -34,15 +38,24 @@ Repo-specific architecture rules live in `$vibecoding-*` skills below.
 
 ## Skill-based workflows (MANDATORY for Codex)
 
-All feature work MUST go through a project skill under [`.agents/skills/`](.agents/skills/).
-Do NOT write or edit module code without loading the matching skill first.
+All project work MUST start by loading a project skill under
+[`.agents/skills/`](.agents/skills/). Use `$vibecoding-codex-workflow` as the
+default entrypoint, then load the narrower skill it requires. Do NOT write or
+edit module code without loading the matching module skill first.
 
 Rules:
 
-1. Read the skill's `SKILL.md` fully before editing files.
-2. Follow its checklist in order; do not skip steps.
-3. Run `bash .agents/skills/vibecoding-verify/scripts/verify.sh`; exit code must be `0` before completion.
-4. If verify fails, fix `[ARCH]` errors and re-run until `verify: ALL PASSED`.
+1. Read `.agents/skills/vibecoding-codex-workflow/SKILL.md`, then every routed
+   skill's `SKILL.md`, before editing files.
+2. Before any coding, scaffolding, refactoring, migration, or test edit, complete
+   `.agents/skills/vibecoding-architecture-design/SKILL.md` using current code
+   structure as evidence.
+3. Follow skill checklists in order; do not skip steps.
+4. For feature or bugfix work, use Superpowers TDD/debugging flow plus the
+   matching project module skill.
+5. Run `bash .agents/skills/vibecoding-verify/scripts/verify.sh`; exit code
+   must be `0` before completion.
+6. If verify fails, fix `[ARCH]` errors and re-run until `verify: ALL PASSED`.
 
 Architecture rules are enforced by `.agents/skills/vibecoding-verify/scripts/check-*.mjs`
 (module anatomy, migrations, DDL design, API contract — not just lint).
